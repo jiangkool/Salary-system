@@ -19,6 +19,7 @@ class CreateTableCustomers extends Migration
             $table->string('name')->comment('姓名');
             $table->integer('sex')->comment('性别 0 女 1 男');
             $table->integer('area_id')->comment('所在区');
+            $table->foreign('area_id')->references('id')->on('areas')->onDelete('set null');
             $table->string('age')->comment('年龄')->nullable();
             $table->string('hospital_code')->comment('住院号');
             $table->integer('status')->default(0)->comment('状态 0 在院 1 出院');
@@ -30,6 +31,7 @@ class CreateTableCustomers extends Migration
        Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('type_id')->comment('类型');
+            $table->foreign('type_id')->references('id')->on('product_types')->onDelete('cascade');
             $table->string('product_name')->comment('名称');
             $table->decimal('price',10,2)->comment('价格');
             $table->integer('num')->nullable()->default(0)->comment('库存');
@@ -76,6 +78,7 @@ class CreateTableCustomers extends Migration
             $table->json('order_details')->comment('订单详细');
             $table->decimal('total', 10, 2)->default(0.00)->comment('订单金额');
             $table->integer('area_id')->comment('区号');
+            $table->foreign('area_id')->references('id')->on('areas')->onDelete('set null');
             $table->integer('status')->default(0)->comment('是否出单 0 未出  1 已出');
             $table->unique('hospital_code');//添加索引
             $table->unique('order_code');//添加索引  
@@ -87,6 +90,7 @@ class CreateTableCustomers extends Migration
             $table->increments('id');
             $table->string('name')->comment('姓名');
             $table->integer('work_id')->comment('工种');
+            $table->foreign('work_id')->references('id')->on('works')->onDelete('set null');
             $table->integer('work_num')->comment('工种单位数量');
             $table->decimal('total', 10, 2)->default(0.00)->comment('总收入');
             $table->dateTime('workdate')->comment('日期');
